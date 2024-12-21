@@ -1,36 +1,48 @@
 import React, { useState } from 'react';
-import { Button, TextField, Container, Typography, Box, Alert, Paper } from '@mui/material';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth, handleGoogleSignIn } from '../firebase';
+import { Button, TextField, Container, Typography, Box, Alert, Paper, Avatar } from '@mui/material';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { auth, googleProvider } from '../firebase';
+import { useNavigate } from 'react-router-dom';
+import  "./Auth.css"
 
-const Auth = () => {
-  // State hooks for email, password, error handling, and toggle between login and register
+const Auth = ({ setUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isRegistering, setIsRegistering] = useState(false); // Toggle between Register and Login
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [googleUser, setGoogleUser] = useState(null); // Store Google user
 
-  // Register handler
+  const navigate = useNavigate();
+
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      alert('User registered successfully!');
-      setEmail(''); // Clear email and password after successful registration
-      setPassword('');
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      setUser(userCredential.user);
+      navigate('/dashboard'); // Redirect to dashboard after successful register
     } catch (error) {
       setError(error.message);
     }
   };
 
-  // Login handler
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      alert('User logged in successfully!');
-      setEmail(''); // Clear email and password after successful login
-      setPassword('');
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      setUser(userCredential.user);
+      navigate('/dashboard'); // Redirect to dashboard after successful login
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      setUser(user);
+      setGoogleUser(user); // Set Google user info
+      navigate('/dashboard');
     } catch (error) {
       setError(error.message);
     }
@@ -44,7 +56,6 @@ const Auth = () => {
             {isRegistering ? 'Register' : 'Login'}
           </Typography>
 
-          {/* Form handling based on the state (isRegistering) */}
           <form onSubmit={isRegistering ? handleRegister : handleLogin} style={{ width: '100%' }}>
             <TextField
               label="Email"
@@ -70,19 +81,27 @@ const Auth = () => {
             </Button>
           </form>
 
-          {/* Display error message */}
           {error && <Alert severity="error" sx={{ marginTop: 2 }}>{error}</Alert>}
 
-          {/* Google Sign-In button */}
           <Box sx={{ marginTop: 2 }}>
             <Button variant="outlined" color="secondary" onClick={handleGoogleSignIn} fullWidth>
-              Sign in with Google
+              {googleUser ? (
+                <>
+                  <Avatar src={googleUser.photoURL} alt={googleUser.displayName} sx={{ width: 24, height: 24, marginRight: 1 }} />
+                  {googleUser.displayName}
+                </>
+              ) : (
+                'Sign in with Google'
+              )}
             </Button>
           </Box>
 
-          {/* Toggle between Register and Login view */}
           <Box sx={{ marginTop: 2 }}>
-            <Button variant="text" onClick={() => setIsRegistering(!isRegistering)} fullWidth>
+            <Button
+              variant="text"
+              onClick={() => setIsRegistering(!isRegistering)}
+              fullWidth
+            >
               {isRegistering ? 'Already have an account? Login' : 'Don’t have an account? Register'}
             </Button>
           </Box>
