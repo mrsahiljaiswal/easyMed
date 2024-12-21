@@ -3,7 +3,6 @@ import { Button, TextField, Container, Typography, Box, Alert, Paper, Avatar } f
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase';
 import { useNavigate } from 'react-router-dom';
-import  "./Auth.css"
 
 const Auth = ({ setUser }) => {
   const [email, setEmail] = useState('');

@@ -1,45 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { ThemeProvider } from "@mui/material";
+import MainLayout from './layouts/MainLayout'; // Import Main Layout
+import Aboutus from './pages/Aboutus'; // Page imports
+import Appointment from './pages/Appointment';
+import Error404 from './pages/Error404';
+import Home from './pages/Home';
+import MedicineDelivery from './pages/MedicineDelivery';
+import theme from './pages/theme';
+import SuccessPopup from './pages/SuccessPopup';
 import Auth from './components/Auth'; // Import Auth component
-import Dashboard from './components/dashboard'; // Import Dashboard component
-import { auth } from './firebase'; // Import Firebase auth
+import { auth } from './firebase'; // Import Firebase authentication
 
 const App = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  // Use useEffect to handle the auth state change
+  // Monitor authentication state
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((loggedInUser) => {
       if (loggedInUser) {
-        setUser(loggedInUser);
-        navigate('/dashboard');
+        setUser(loggedInUser); // Set user state if logged in
+        navigate('/home'); // Redirect to home page after login
       } else {
-        setUser(null);
-        navigate('/');
+        setUser(null); // No user, reset state
+        navigate('/'); // Redirect to login if no user
       }
     });
 
-    // Cleanup the listener on unmount
+    // Cleanup subscription
     return () => unsubscribe();
-  }, [navigate]);  // Dependency array ensures navigate is available
+  }, [navigate]);
 
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Auth setUser={setUser} />} />
-        <Route path="/dashboard" element={<Dashboard user={user} />} />
-      </Routes>
-    </div>
-  );
-};
+    <Router>
+      <ThemeProvider theme={theme}>
+        <Routes>
+          {/* Route for unauthenticated users (Login page) */}
+          <Route path="/" element={<Auth setUser={setUser} />} />
 
-const RootApp = () => {
-  return (
-    <Router> {/* Router is wrapping the entire app */}
-      <App />
+          {/* Protected routes for authenticated users */}
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Home />} />
+            <Route path="medicineDelivery" element={<MedicineDelivery />} />
+            <Route path="appointment" element={<Appointment />} />
+            <Route path="aboutus" element={<Aboutus />} />
+            <Route path="/succcess" element={<SuccessPopup />} />
+          </Route>
+
+          {/* Error page for undefined routes */}
+          <Route path="*" element={<Error404 />} />
+        </Routes>
+      </ThemeProvider>
     </Router>
   );
 };
 
-export default RootApp;
+export default App;
