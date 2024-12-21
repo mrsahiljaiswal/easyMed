@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Typography, Button, Avatar, Menu, MenuItem, CircularProgress, IconButton, Drawer, List, ListItem, ListItemText, useMediaQuery } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, Avatar, Menu, MenuItem, CircularProgress, IconButton, Drawer, List, ListItem, ListItemText, useMediaQuery, Switch } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { auth } from '../firebase'; // Import Firebase auth
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ const Navbar = () => {
   const [loading, setLoading] = useState(true); // Loading state for user details
   const [anchorEl, setAnchorEl] = useState(null); // Menu anchor state
   const [drawerOpen, setDrawerOpen] = useState(false); // Drawer open/close state
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light'); // Store theme in state and load from localStorage
   const navigate = useNavigate();
 
   // Check if the screen size is small (useMediaQuery hook)
@@ -22,9 +23,16 @@ const Navbar = () => {
       setLoading(false); // Stop loading once user details are fetched
     });
 
+    // Set the theme based on localStorage
+    if (theme === 'dark') {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+
     // Clean up the listener on component unmount
     return () => unsubscribe();
-  }, []);
+  }, [theme]);
 
   // Handle the menu open and close
   const handleMenuClick = (event) => {
@@ -45,6 +53,13 @@ const Navbar = () => {
   // Handle drawer toggle for mobile menu
   const toggleDrawer = (open) => () => {
     setDrawerOpen(open);
+  };
+
+  // Handle theme change and persist it in localStorage
+  const handleThemeChange = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme); // Save the theme to localStorage
   };
 
   const menuItems = (
@@ -114,7 +129,8 @@ const Navbar = () => {
         </Typography>
 
         {/* Desktop Menu (NavLinks) */}
-        {!isMobile && (
+        {/* Conditionally render menuItems based on screen size */}
+        { !isMobile && (
           <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
             {menuItems}
 
