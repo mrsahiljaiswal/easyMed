@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Typography, Button, Avatar, Menu, MenuItem, CircularProgress, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, Avatar, Menu, MenuItem, CircularProgress, IconButton, Drawer, List, ListItem, ListItemText, useMediaQuery } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { auth } from '../firebase'; // Import Firebase auth
 import { useNavigate } from 'react-router-dom';
@@ -10,8 +10,10 @@ const Navbar = () => {
   const [loading, setLoading] = useState(true); // Loading state for user details
   const [anchorEl, setAnchorEl] = useState(null); // Menu anchor state
   const [drawerOpen, setDrawerOpen] = useState(false); // Drawer open/close state
-  const [showDesktopLinks, setShowDesktopLinks] = useState(true); // State to control visibility of desktop links
   const navigate = useNavigate();
+
+  // Check if the screen size is small (useMediaQuery hook)
+  const isMobile = useMediaQuery('(max-width: 600px)'); 
 
   useEffect(() => {
     // Listen for auth state changes
@@ -43,7 +45,6 @@ const Navbar = () => {
   // Handle drawer toggle for mobile menu
   const toggleDrawer = (open) => () => {
     setDrawerOpen(open);
-    setShowDesktopLinks(!open); // Hide desktop links when drawer opens
   };
 
   const menuItems = (
@@ -58,6 +59,25 @@ const Navbar = () => {
 
   const mobileMenuItems = (
     <List>
+      {/* Profile Section in Sidebar */}
+      {loading ? (
+        <CircularProgress color="inherit" size={30} sx={{ marginLeft: 2 }} />
+      ) : user ? (
+        <ListItem button onClick={handleMenuClick}>
+          <Avatar
+            alt={user.displayName || 'User'}
+            src={user.photoURL || '/default-avatar.png'}
+            sx={{ marginRight: 2 }}
+          />
+          <ListItemText primary="Profile" />
+        </ListItem>
+      ) : (
+        <ListItem button component={Link} to="/">
+          <ListItemText primary="Login" />
+        </ListItem>
+      )}
+      
+      {/* Menu items */}
       <ListItem button component={Link} to="/home">
         <ListItemText primary="Home" />
       </ListItem>
@@ -73,6 +93,13 @@ const Navbar = () => {
       <ListItem button component={Link} to="/Aboutus">
         <ListItemText primary="About Us" />
       </ListItem>
+
+      {/* Logout Button in Sidebar */}
+      {user && (
+        <ListItem button onClick={handleLogout}>
+          <ListItemText primary="Logout" />
+        </ListItem>
+      )}
     </List>
   );
 
@@ -82,38 +109,41 @@ const Navbar = () => {
         {/* Logo */}
         <Typography variant="h6" sx={{ flexGrow: 1 }} >
           <Link to="/home" style={{ textDecoration: 'none', color: 'white', display: 'flex', alignItems: 'center' }}>
-          easyMed.</Link>
+            easyMed.
+          </Link>
         </Typography>
 
-       
-        <div style={{ display: showDesktopLinks ? 'flex' : 'none', gap: '20px', alignItems: 'center' }}>
-          {menuItems}
+        {/* Desktop Menu (NavLinks) */}
+        {!isMobile && (
+          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+            {menuItems}
 
-          {/* Profile Avatar */}
-          {loading ? (
-            <CircularProgress color="inherit" size={30} sx={{ marginLeft: 2 }} />
-          ) : user ? (
-            <div>
-              <Avatar
-                alt={user.displayName || 'User'}
-                src={user.photoURL || '/default-avatar.png'}
-                onClick={handleMenuClick}
-                sx={{ cursor: 'pointer' }}
-              />
-              <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleMenuClose}
-              >
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-              </Menu>
-            </div>
-          ) : (
-            <Button component={Link} to="/" color="inherit">
-              Login
-            </Button>
-          )}
-        </div>
+            {/* Profile Avatar */}
+            {loading ? (
+              <CircularProgress color="inherit" size={30} sx={{ marginLeft: 2 }} />
+            ) : user ? (
+              <div>
+                <Avatar
+                  alt={user.displayName || 'User'}
+                  src={user.photoURL || '/default-avatar.png'}
+                  onClick={handleMenuClick}
+                  sx={{ cursor: 'pointer' }}
+                />
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                >
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </div>
+            ) : (
+              <Button component={Link} to="/" color="inherit">
+                Login
+              </Button>
+            )}
+          </div>
+        )}
 
         {/* Mobile Menu Icon */}
         <IconButton
@@ -131,6 +161,12 @@ const Navbar = () => {
           anchor="right"
           open={drawerOpen}
           onClose={toggleDrawer(false)}
+          sx={{
+            width: '300px', // Increased sidebar width
+            '& .MuiDrawer-paper': {
+              width: '300px', // Same width for the paper (sidebar)
+            }
+          }}
         >
           {mobileMenuItems}
         </Drawer>
