@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextField, Container, Typography, Box, Alert, Paper, Avatar } from '@mui/material';
+import { Button, TextField, Container, Typography, Box, Alert, Paper, Avatar, CircularProgress } from '@mui/material';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -9,29 +9,43 @@ const Auth = ({ setUser }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
-  const [googleUser, setGoogleUser] = useState(null); // Store Google user
+  const [googleUser, setGoogleUser] = useState(null); 
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
+  // Clear error messages after 5 seconds
+  const clearError = () => setTimeout(() => setError(''), 5000);
+
   const handleRegister = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(''); // Reset error message
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       setUser(userCredential.user);
-      navigate('/dashboard'); // Redirect to dashboard after successful register
+      navigate('/home'); 
     } catch (error) {
       setError(error.message);
+      clearError();
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(''); // Reset error message
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       setUser(userCredential.user);
-      navigate('/dashboard'); // Redirect to dashboard after successful login
+      navigate('/home'); 
     } catch (error) {
       setError(error.message);
+      clearError();
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -40,10 +54,11 @@ const Auth = ({ setUser }) => {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       setUser(user);
-      setGoogleUser(user); // Set Google user info
-      navigate('/dashboard');
+      setGoogleUser(user);
+      navigate('/home');
     } catch (error) {
       setError(error.message);
+      clearError();
     }
   };
 
@@ -75,8 +90,8 @@ const Auth = ({ setUser }) => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <Button variant="contained" color="primary" type="submit" fullWidth sx={{ marginTop: 2 }}>
-              {isRegistering ? 'Register' : 'Login'}
+            <Button variant="contained" color="primary" type="submit" fullWidth sx={{ marginTop: 2 }} disabled={loading}>
+              {loading ? <CircularProgress size={24} /> : isRegistering ? 'Register' : 'Login'}
             </Button>
           </form>
 
