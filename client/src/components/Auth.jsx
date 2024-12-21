@@ -9,14 +9,16 @@ const Auth = ({ setUser }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
-  const [googleUser, setGoogleUser] = useState(null); 
+  const [googleUser, setGoogleUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  // Clear error messages after 5 seconds
+  
+  // Utility to clear error messages after 5 seconds
   const clearError = () => setTimeout(() => setError(''), 5000);
 
+  // Handle user registration
   const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -24,7 +26,7 @@ const Auth = ({ setUser }) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       setUser(userCredential.user);
-      navigate('/home'); 
+      navigate('/'); // Redirect to home after registration
     } catch (error) {
       setError(error.message);
       clearError();
@@ -33,6 +35,7 @@ const Auth = ({ setUser }) => {
     }
   };
 
+  // Handle user login
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -40,7 +43,7 @@ const Auth = ({ setUser }) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       setUser(userCredential.user);
-      navigate('/home'); 
+      navigate('/'); // Redirect to home after login
     } catch (error) {
       setError(error.message);
       clearError();
@@ -49,20 +52,27 @@ const Auth = ({ setUser }) => {
     }
   };
 
+  // Handle Google Sign-In
   const handleGoogleSignIn = async () => {
     try {
+      setLoading(true);
+      setError(''); // Reset error message
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       setUser(user);
       setGoogleUser(user);
-      navigate('/home');
+      navigate('/'); // Redirect to home after Google Sign-In
     } catch (error) {
       setError(error.message);
       clearError();
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
+
+    
     <Container maxWidth="sm" sx={{ marginTop: 4 }}>
       <Paper elevation={3} sx={{ padding: 3 }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -70,6 +80,7 @@ const Auth = ({ setUser }) => {
             {isRegistering ? 'Register' : 'Login'}
           </Typography>
 
+          {/* Registration/Login Form */}
           <form onSubmit={isRegistering ? handleRegister : handleLogin} style={{ width: '100%' }}>
             <TextField
               label="Email"
@@ -90,18 +101,41 @@ const Auth = ({ setUser }) => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <Button variant="contained" color="primary" type="submit" fullWidth sx={{ marginTop: 2 }} disabled={loading}>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              fullWidth
+              sx={{ marginTop: 2 }}
+              disabled={loading}
+            >
               {loading ? <CircularProgress size={24} /> : isRegistering ? 'Register' : 'Login'}
             </Button>
           </form>
 
-          {error && <Alert severity="error" sx={{ marginTop: 2 }}>{error}</Alert>}
+          {/* Error Alert */}
+          {error && (
+            <Alert severity="error" sx={{ marginTop: 2 }}>
+              {error}
+            </Alert>
+          )}
 
+          {/* Google Sign-In */}
           <Box sx={{ marginTop: 2 }}>
-            <Button variant="outlined" color="secondary" onClick={handleGoogleSignIn} fullWidth>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={handleGoogleSignIn}
+              fullWidth
+              disabled={loading}
+            >
               {googleUser ? (
                 <>
-                  <Avatar src={googleUser.photoURL} alt={googleUser.displayName} sx={{ width: 24, height: 24, marginRight: 1 }} />
+                  <Avatar
+                    src={googleUser.photoURL}
+                    alt={googleUser.displayName}
+                    sx={{ width: 24, height: 24, marginRight: 1 }}
+                  />
                   {googleUser.displayName}
                 </>
               ) : (
@@ -110,6 +144,7 @@ const Auth = ({ setUser }) => {
             </Button>
           </Box>
 
+          {/* Toggle Register/Login */}
           <Box sx={{ marginTop: 2 }}>
             <Button
               variant="text"

@@ -41,18 +41,19 @@ const Navbar = () => {
     <AppBar position="sticky">
       <Toolbar>
         {/* Logo */}
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          <Link to="/" style={{ textDecoration: 'none', color: 'white', display: 'flex', alignItems: 'center' }}>
+        <Typography variant="h6" sx={{ flexGrow: 1 }} >
+          <Link to="/home" style={{ textDecoration: 'none', color: 'white', display: 'flex', alignItems: 'center' }}>
             <span style={{}}>easy</span>Med<span>.</span>
           </Link>
         </Typography>
 
         {/* Navigation Links */}
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-          <Button component={Link} to="/" color="inherit">Home</Button>
-          <Button component={Link} to="/medicineDelivery" color="inherit">Medicine Delivery</Button>
-          <Button component={Link} to="/appointment" color="inherit">Appointment</Button>
-          <Button component={Link} to="/aboutus" color="inherit">About Us</Button>
+          <Button component={Link} to="/home" color="inherit">Home</Button>
+          <Button component={Link} to="/KYS" color="inherit">KYS</Button>
+          <Button component={Link} to="/MedicineDelivery" color="inherit">Medicine Delivery</Button>
+          <Button component={Link} to="/Appointment" color="inherit">Appointment</Button>
+          <Button component={Link} to="/Aboutus" color="inherit">About Us</Button>
 
           {/* Profile Avatar */}
           {loading ? (
