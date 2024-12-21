@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TextField, MenuItem, Button, Box, Typography, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-// import SuccessPopup from "./SucccessPopup";
+// import SuccessPopup from "./SucccessPopup"; // Assuming you want a success popup
 // import { handleSubmit } from "../utils/handleSubmit"; // Import handleSubmit function from utils
 
 const Appointment = () => {
@@ -22,12 +22,33 @@ const Appointment = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Generate a random room ID
+    const roomId = `room-${Math.random().toString(36).substr(2, 9)}`;
+    const meetingLink = `https://meet.jit.si/${roomId}`;
+    
+    // Save appointment details
+    const appointment = {
+      ...formData,
+      roomId,
+      meetingLink,
+    };
+    setAppointmentDetails(appointment);
+    setSuccess(true);
+    
+    // Redirect or navigate if needed
+    // navigate('/confirmation'); // Optionally navigate to another page
+  };
+
   return (
     <Box sx={{ maxWidth: 500, mx: "auto", mt: 4, p: 3, boxShadow: 3, borderRadius: 2 }}>
       <Typography variant="h4" textAlign="center" mb={3}>
         Book an Appointment
       </Typography>
-      <form onSubmit={(e) => handleSubmit(e, formData, setAppointmentDetails, setSuccess, navigate)}>
+      <form onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <TextField
             name="name"
@@ -96,7 +117,26 @@ const Appointment = () => {
           </Button>
         </Stack>
       </form>
-      {success && <SuccessPopup appointment={appointmentDetails} />}
+
+      {success && (
+        <Box sx={{ mt: 4, textAlign: "center", color: "green" }}>
+          <Typography variant="h6" mb={2}>
+            Appointment Booked Successfully!
+          </Typography>
+          <Typography variant="body1" mb={2}>
+            Your video call is scheduled. Click the link below to join:
+          </Typography>
+          <Button
+            variant="contained"
+            color="secondary"
+            href={appointmentDetails.meetingLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Join Video Call
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };
