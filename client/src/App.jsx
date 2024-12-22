@@ -12,6 +12,7 @@ import Aboutus from './pages/Aboutus';
 import ThemeToggle from './components/ThemeToggle';
 import MedicineBuy from './pages/MedicineBuy';
 import Cart from './components/Cart';
+import FloatingEmergencyButton from './components/FloatingEmergencyButton';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -74,6 +75,7 @@ const App = () => {
 
         {/* Include the ThemeToggle component and pass the handleThemeChange function */}
         <ThemeToggle onThemeChange={handleThemeChange} currentTheme={darkMode} />
+        <FloatingEmergencyButton />
       </Router>
     </ThemeProvider>
   );
