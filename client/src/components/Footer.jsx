@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, Typography, Link, Box } from '@mui/material';
+import { Box, Container, Grid, Typography, Link } from '@mui/material';
 
 const Footer = () => {
   return (
@@ -46,6 +46,7 @@ const Footer = () => {
             </Typography>
           </Grid>
         </Grid>
+
         {/* Bottom Copyright */}
         <Box sx={{ textAlign: 'center', marginTop: '20px' }}>
           <Typography variant="body2" color="inherit">

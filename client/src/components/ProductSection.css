@@ -1,0 +1,20 @@
+.product-section {
+    margin: 20px 0;
+  }
+  
+  .product-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 10px 0;
+  }
+  
+  .product-scroll::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .product-scroll::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+  

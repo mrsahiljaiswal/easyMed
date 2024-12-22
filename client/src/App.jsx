@@ -10,6 +10,7 @@ import KYS from './pages/KYS';
 import MedicineDelivery from './pages/MedicineDelivery';
 import Aboutus from './pages/Aboutus';
 import ThemeToggle from './components/ThemeToggle';
+import MedicineBuy from './pages/MedicineBuy';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -62,6 +63,7 @@ const App = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/kys" element={<KYS />} />
             <Route path="/medicinedelivery" element={<MedicineDelivery />} />
+            <Route path="/buy/:id" element={<MedicineBuy />} />
             <Route path="/appointment" element={<Appointment />} />
             <Route path="/aboutus" element={<Aboutus />} />
           </Route>
