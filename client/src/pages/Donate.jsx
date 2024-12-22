@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Typography, Box, Button, TextField, Grid, Card, CardContent, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, MenuItem } from '@mui/material';
 import products from '../data/products'; // Import products data
 import donateImage from '../assets/donate.jpg'; // Import background image
+import axios from 'axios'; // Import axios for HTTP requests
 
 const Donate = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -12,11 +13,14 @@ const Donate = () => {
     disaster: { name: '', email: '', help: '', phone: '' }
   });
 
-  const handleDonateNow = (event, type) => {
+  const handleDonateNow = async (event, type) => {
     event.preventDefault();
-    // Here you can send formData[type] to the backend or database
-    console.log(formData[type]);
-    setOpenDialog(true);
+    try {
+      await axios.post('http://localhost:3000/api/donations', formData[type]);
+      setOpenDialog(true);
+    } catch (error) {
+      console.error('Error sending donation data:', error);
+    }
   };
 
   const handleCloseDialog = () => {

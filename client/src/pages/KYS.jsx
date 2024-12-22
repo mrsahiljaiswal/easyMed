@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Typography, Box, Button, TextField, Grid, MenuItem, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import kyh from '../assets/kyh.jpg'; // Import the hero image
+import axios from 'axios'; // Import axios for HTTP requests
 
 const KYS = () => {
   const [formData, setFormData] = useState({
@@ -31,13 +32,26 @@ const KYS = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Generate a health report based on the form data
-    const healthReport = generateHealthReport(formData);
-    setReport(healthReport.report);
-    setAccuracy(healthReport.accuracy);
-    setOpenDialog(true);
+    try {
+      const response = await axios.post('http://localhost:3000/api/health-assessment', formData);
+      const healthReport = response.data;
+      setReport(healthReport.report);
+      setAccuracy(healthReport.accuracy);
+      setOpenDialog(true);
+    } catch (error) {
+      console.error('Error submitting health assessment:', error);
+    }
+  };
+
+  const handleDonate = async () => {
+    try {
+      await axios.post('http://localhost:3000/api/donations', formData);
+      alert('Donation data sent successfully');
+    } catch (error) {
+      console.error('Error sending donation data:', error);
+    }
   };
 
   const generateHealthReport = (data) => {
@@ -309,6 +323,15 @@ const KYS = () => {
             sx={{ mt: 3, mb: 2 }}
           >
             Get Report
+          </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            color="secondary"
+            sx={{ mt: 1, mb: 2 }}
+            onClick={handleDonate}
+          >
+            Donate
           </Button>
         </Box>
       </Box>

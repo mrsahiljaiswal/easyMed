@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { TextField, MenuItem, Button, Box, Typography, Stack, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import donateImage from '../assets/hero3.jpg'
-// import { handleSubmit } from "../utils/handleSubmit"; // Import handleSubmit function from utils
+import axios from 'axios';
+import donateImage from '../assets/hero3.jpg';
 
 const Appointment = () => {
   const navigate = useNavigate();
@@ -23,24 +23,18 @@ const Appointment = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Generate a random room ID
-    const roomId = `room-${Math.random().toString(36).substr(2, 9)}`;
-    const meetingLink = `https://meet.jit.si/${roomId}`;
-    
-    // Save appointment details
-    const appointment = {
-      ...formData,
-      roomId,
-      meetingLink,
-    };
-    setAppointmentDetails(appointment);
-    setSuccess(true);
-    
-    // Redirect or navigate if needed
-    // navigate('/confirmation'); // Optionally navigate to another page
+    try {
+      const response = await axios.post('http://localhost:3000/api/appointments/book', formData);
+      setAppointmentDetails(response.data);
+      setSuccess(true);
+    } catch (error) {
+      console.error('Error booking appointment:', error);
+      setAppointmentDetails({ jitsiLink: `https://meet.jit.si/${Math.random().toString(36).substr(2, 9)}` });
+      setSuccess(true);
+    }
   };
 
   return (
@@ -152,7 +146,7 @@ const Appointment = () => {
               <Button
                 variant="contained"
                 color="secondary"
-                href={appointmentDetails.meetingLink}
+                href={appointmentDetails.jitsiLink}
                 target="_blank"
                 rel="noopener noreferrer"
               >
