@@ -1,10 +1,11 @@
 // src/pages/MedicineDelivery.jsx
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Container, Typography, Card, CardMedia, CardContent, CardActions, Button, Box, Grid } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { useNavigate } from 'react-router-dom';
 import products from '../data/products';
+import { addToCart, getCartProducts } from '../data/cartProducts';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,10 +39,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MedicineDelivery = () => {
+const MedicineDelivery = ({ setCartCount }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const refs = useRef({});
+  const [cartItems, setCartItems] = useState(getCartProducts());
 
   const handleScrollToLetter = (letter) => {
     const element = refs.current[letter];
@@ -59,6 +61,12 @@ const MedicineDelivery = () => {
 
   const generateAlphabet = () => {
     return [...Array(26)].map((_, i) => String.fromCharCode(65 + i));
+  };
+
+  const handleAddToCart = (product) => {
+    addToCart({ ...product, quantity: 1 });
+    setCartItems(getCartProducts());
+    setCartCount(getCartProducts().length);
   };
 
   return (
@@ -88,9 +96,9 @@ const MedicineDelivery = () => {
               <Typography variant="h5" gutterBottom>
                 {category.category}
               </Typography>
-              <div className={classes.scrollContainer}>
+              <Grid container spacing={3}>
                 {category.items.map((product) => (
-                  <div key={product.id} className={classes.scrollItem}>
+                  <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
                     <Card className={classes.card}>
                       <CardMedia
                         className={classes.media}
@@ -109,7 +117,7 @@ const MedicineDelivery = () => {
                         </Typography>
                       </CardContent>
                       <CardActions>
-                        <Button size="small" color="primary">
+                        <Button size="small" color="primary" onClick={() => handleAddToCart(product)}>
                           Add to Cart
                         </Button>
                         <Button size="small" color="secondary" onClick={() => navigate(`/buy/${product.id}`)}>
@@ -117,9 +125,9 @@ const MedicineDelivery = () => {
                         </Button>
                       </CardActions>
                     </Card>
-                  </div>
+                  </Grid>
                 ))}
-              </div>
+              </Grid>
             </div>
           );
         })}

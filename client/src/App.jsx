@@ -11,11 +11,13 @@ import MedicineDelivery from './pages/MedicineDelivery';
 import Aboutus from './pages/Aboutus';
 import ThemeToggle from './components/ThemeToggle';
 import MedicineBuy from './pages/MedicineBuy';
+import Cart from './components/Cart';
 
 const App = () => {
   const [user, setUser] = useState(null);
   const [darkMode, setDarkMode] = useState(false); // State to manage theme mode
   const [loading, setLoading] = useState(true); // Loading state to prevent flash of theme
+  const [cartCount, setCartCount] = useState(0); // State to manage cart count
 
   // Function to get the theme from localStorage or default to false (light mode)
   const getSavedTheme = () => {
@@ -62,10 +64,11 @@ const App = () => {
           <Route element={<Layout setUser={setUser} />}>
             <Route path="/home" element={<Home />} />
             <Route path="/kys" element={<KYS />} />
-            <Route path="/medicinedelivery" element={<MedicineDelivery />} />
+            <Route path="/medicinedelivery" element={<MedicineDelivery setCartCount={setCartCount} />} />
             <Route path="/buy/:id" element={<MedicineBuy />} />
             <Route path="/appointment" element={<Appointment />} />
             <Route path="/aboutus" element={<Aboutus />} />
+            <Route path="/cart" element={<Cart />} />
           </Route>
         </Routes>
 

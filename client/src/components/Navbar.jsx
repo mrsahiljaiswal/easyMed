@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Typography, Button, Avatar, Menu, MenuItem, CircularProgress, IconButton, Drawer, List, ListItem, ListItemText, useMediaQuery, Switch } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { AppBar, Toolbar, Typography, Button, Avatar, Menu, MenuItem, CircularProgress, IconButton, Drawer, List, ListItem, ListItemText, useMediaQuery, Badge } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase'; // Import Firebase auth
-import { useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { getCartProducts } from '../data/cartProducts';
 
 const Navbar = () => {
   const [user, setUser] = useState(null); // User state
   const [loading, setLoading] = useState(true); // Loading state for user details
   const [anchorEl, setAnchorEl] = useState(null); // Menu anchor state
   const [drawerOpen, setDrawerOpen] = useState(false); // Drawer open/close state
+  const [cartCount, setCartCount] = useState(getCartProducts().length); // Cart count state
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light'); // Store theme in state and load from localStorage
   const navigate = useNavigate();
 
@@ -30,8 +32,20 @@ const Navbar = () => {
       document.body.classList.remove('dark-mode');
     }
 
+    // Update cart count whenever cartProducts changes
+    const updateCartCount = () => {
+      setCartCount(getCartProducts().length);
+    };
+
+    // Listen for changes in cartProducts
+    const cartObserver = new MutationObserver(updateCartCount);
+    cartObserver.observe(document, { childList: true, subtree: true });
+
     // Clean up the listener on component unmount
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      cartObserver.disconnect();
+    };
   }, [theme]);
 
   // Handle the menu open and close
@@ -160,6 +174,13 @@ const Navbar = () => {
             )}
           </div>
         )}
+
+        {/* Cart Icon */}
+        <IconButton color="inherit" onClick={() => navigate('/cart')}>
+          <Badge badgeContent={cartCount} color="secondary">
+            <ShoppingCartIcon />
+          </Badge>
+        </IconButton>
 
         {/* Mobile Menu Icon */}
         <IconButton
