@@ -79,7 +79,7 @@ const Navbar = () => {
   const menuItems = (
     <div>
       <Button component={Link} to="/home" color="inherit">Home</Button>
-      <Button component={Link} to="/KYH" color="inherit">KYH</Button>
+      <Button component={Link} to="/KYS" color="inherit">KYH</Button>
       <Button component={Link} to="/MedicineDelivery" color="inherit">Medicine</Button>
       <Button component={Link} to="/Appointment" color="inherit">Appointment</Button>
       <Button component={Link} to="/Donate" color="inherit">Donate</Button>
@@ -111,8 +111,8 @@ const Navbar = () => {
       <ListItem button component={Link} to="/home">
         <ListItemText primary="Home" />
       </ListItem>
-      <ListItem button component={Link} to="/KYH">
-        <ListItemText primary="KYH" />
+      <ListItem button component={Link} to="/KYS">
+        <ListItemText primary="KYS" />
       </ListItem>
       <ListItem button component={Link} to="/MedicineDelivery">
         <ListItemText primary="Medicine Delivery" />

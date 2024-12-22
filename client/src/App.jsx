@@ -6,7 +6,7 @@ import Auth from './components/Auth';
 import { auth } from './firebase';
 import Home from './pages/Home';
 import Appointment from './pages/Appointment';
-import KYH from './pages/KYH';
+import KYS from './pages/KYS';
 import MedicineDelivery from './pages/MedicineDelivery';
 import Aboutus from './pages/Aboutus';
 import ThemeToggle from './components/ThemeToggle';
@@ -21,10 +21,10 @@ const App = () => {
   const [loading, setLoading] = useState(true); // Loading state to prevent flash of theme
   const [cartCount, setCartCount] = useState(0); // State to manage cart count
 
-  // Function to get the theme from localStorage or default to false (light mode)
+  // Function to get the theme from localStorage or default to false
   const getSavedTheme = () => {
     const savedTheme = localStorage.getItem('theme');
-    return savedTheme === 'dark'; // Return true for dark mode, false for light mode
+    return savedTheme === 'dark'; // Return true for dark mode, false otherwise
   };
 
   // Check the theme in localStorage and set the initial darkMode state
@@ -37,7 +37,7 @@ const App = () => {
   // Create a theme based on darkMode state
   const theme = createTheme({
     palette: {
-      mode: darkMode ? 'dark' : 'light',  // Change theme mode based on state
+      mode: darkMode ? 'light' : 'dark',  // Correct the theme mode based on state
     },
     typography: {
       fontFamily: '"Roboto", sans-serif',
@@ -65,7 +65,7 @@ const App = () => {
           {/* Define protected routes that require a logged-in user */}
           <Route element={<Layout setUser={setUser} />}>
             <Route path="/home" element={<Home />} />
-            <Route path="/kyh" element={<KYH />} />
+            <Route path="/kys" element={<KYS />} />
             <Route path="/medicinedelivery" element={<MedicineDelivery setCartCount={setCartCount} />} />
             <Route path="/buy/:id" element={<MedicineBuy />} />
             <Route path="/appointment" element={<Appointment />} />
@@ -76,7 +76,9 @@ const App = () => {
         </Routes>
 
         {/* Include the ThemeToggle component and pass the handleThemeChange function */}
-        <ThemeToggle onThemeChange={handleThemeChange} currentTheme={darkMode} />
+        <div style={{ position: 'fixed', bottom: '20px', left: '20px' }}>
+          <ThemeToggle onThemeChange={handleThemeChange} currentTheme={darkMode} />
+        </div>
         <FloatingEmergencyButton />
       </Router>
     </ThemeProvider>

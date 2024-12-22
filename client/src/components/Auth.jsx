@@ -3,6 +3,7 @@ import { Button, TextField, Container, Typography, Box, Alert, Paper, Avatar, Ci
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import { Google as GoogleIcon } from '@mui/icons-material'; // Import Google icon
 
 const Auth = ({ setUser }) => {
   const [email, setEmail] = useState('');
@@ -73,8 +74,8 @@ const Auth = ({ setUser }) => {
   return (
 
     
-    <Container maxWidth="sm" sx={{ marginTop: 4 }}>
-      <Paper elevation={3} sx={{ padding: 3 }}>
+    <Container maxWidth="sm" sx={{ marginTop: 4, display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+      <Paper elevation={3} sx={{ padding: 3, width: '100%', maxWidth: '400px' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Typography variant="h4" gutterBottom>
             {isRegistering ? 'Register' : 'Login'}
@@ -121,13 +122,14 @@ const Auth = ({ setUser }) => {
           )}
 
           {/* Google Sign-In */}
-          <Box sx={{ marginTop: 2 }}>
+          <Box sx={{ marginTop: 2, width: '100%' }}>
             <Button
               variant="outlined"
               color="secondary"
               onClick={handleGoogleSignIn}
               fullWidth
               disabled={loading}
+              startIcon={<GoogleIcon />} // Add Google icon
             >
               {googleUser ? (
                 <>
@@ -145,7 +147,7 @@ const Auth = ({ setUser }) => {
           </Box>
 
           {/* Toggle Register/Login */}
-          <Box sx={{ marginTop: 2 }}>
+          <Box sx={{ marginTop: 2, width: '100%' }}>
             <Button
               variant="text"
               onClick={() => setIsRegistering(!isRegistering)}
