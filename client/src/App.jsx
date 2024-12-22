@@ -6,7 +6,7 @@ import Auth from './components/Auth';
 import { auth } from './firebase';
 import Home from './pages/Home';
 import Appointment from './pages/Appointment';
-import KYS from './pages/KYS';
+import KYH from './pages/KYH';
 import MedicineDelivery from './pages/MedicineDelivery';
 import Aboutus from './pages/Aboutus';
 import ThemeToggle from './components/ThemeToggle';
@@ -65,7 +65,7 @@ const App = () => {
           {/* Define protected routes that require a logged-in user */}
           <Route element={<Layout setUser={setUser} />}>
             <Route path="/home" element={<Home />} />
-            <Route path="/kys" element={<KYS />} />
+            <Route path="/kyh" element={<KYH />} />
             <Route path="/medicinedelivery" element={<MedicineDelivery setCartCount={setCartCount} />} />
             <Route path="/buy/:id" element={<MedicineBuy />} />
             <Route path="/appointment" element={<Appointment />} />
