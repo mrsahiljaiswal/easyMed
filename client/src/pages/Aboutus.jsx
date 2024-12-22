@@ -82,7 +82,7 @@ const Aboutus = () => {
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019282509634!2d144.9630579153168!3d-37.81410797975161!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577d9f0f1f0f0f0!2sFederation%20Square!5e0!3m2!1sen!2sau!4v1633072800000!5m2!1sen!2sau"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.759850775866!2d77.5649!3d13.0285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670a4b4b4b4%3A0x4b4b4b4b4b4b4b!2sMSRIT%20College!5e0!3m2!1sen!2sin!4v1633072800000!5m2!1sen!2sin"
             width="600"
             height="450"
             style={{ border: 0 }}

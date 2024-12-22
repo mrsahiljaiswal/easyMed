@@ -115,7 +115,7 @@ const KYH = () => {
         Please fill out the following information to get a basic health condition report.
       </Typography>
 
-      <Box component="form" sx={{ mt: 3 }} onSubmit={handleSubmit}>
+      <Box component="form" sx={{  height: '40vh', mt: 3 }} onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField

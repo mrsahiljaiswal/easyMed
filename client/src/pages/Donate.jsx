@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Typography, Box, Button, TextField, Grid, Card, CardContent, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, MenuItem } from '@mui/material';
 import products from '../data/products'; // Import products data
+import donateImage from '../assets/donate.jpg'; // Import background image
 
 const Donate = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -38,12 +39,33 @@ const Donate = () => {
 
   return (
     <Container style={{ marginTop: '20px', maxWidth: '1200px' }}>
-      <Typography variant="h4" gutterBottom>
+      {/* Hero Section */}
+      <Box
+        sx={{
+            height: '40vh',
+          textAlign: 'center',
+          py: 5,
+          backgroundColor: '#f5f5f5',
+          mb: 4,
+          backgroundImage: `url(${donateImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          color: 'white',
+          padding:'40px',
+          fontFamily: 'Arial, sans-serif'
+          
+        }}
+      >
+        <Typography variant="h2" gutterBottom sx={{ fontWeight: 'bold' }}>
         Donate for Care
-      </Typography>
-      <Typography variant="body1" gutterBottom>
+        </Typography>
+        <Typography variant="h6" gutterBottom sx={{}}>
         Your generous donations help us provide better healthcare services to those in need. Thank you for your support!
-      </Typography>
+        </Typography>
+       
+      </Box>
+
+     
 
       {/* Donation Sections */}
       <Grid container spacing={4} sx={{ mt: 3 }}>
