@@ -8,6 +8,7 @@ const connectDB = require('./config/db');
 const healthRoutes = require('./routes/healthRoutes');
 const appointmentRoutes = require('./routes/appointmentRoutes');
 const donationRoutes = require('./routes/donationRoutes');
+const doctorRoutes = require('./routes/doctorRoutes');
 
 dotenv.config();
 connectDB();
@@ -48,6 +49,7 @@ app.get('/protected', verifyIdToken, (req, res) => {
 app.use('/api/health-assessment', healthRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/donations', donationRoutes);
+app.use('/api/doctors', doctorRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
