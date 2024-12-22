@@ -3,11 +3,17 @@ const express = require('express');
 const cors = require('cors');
 const admin = require('firebase-admin');
 const dotenv = require('dotenv');
+const connectDB = require('./config/db');
+
+const healthRoutes = require('./routes/healthRoutes');
+const appointmentRoutes = require('./routes/appointmentRoutes');
+const donationRoutes = require('./routes/donationRoutes');
 
 dotenv.config();
+connectDB();
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
@@ -37,6 +43,11 @@ const verifyIdToken = async (req, res, next) => {
 app.get('/protected', verifyIdToken, (req, res) => {
   res.json({ message: 'Protected data', user: req.user });
 });
+
+// Use new routes
+app.use('/api/health-assessment', healthRoutes);
+app.use('/api/appointments', appointmentRoutes);
+app.use('/api/donations', donationRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
