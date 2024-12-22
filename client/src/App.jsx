@@ -13,6 +13,7 @@ import ThemeToggle from './components/ThemeToggle';
 import MedicineBuy from './pages/MedicineBuy';
 import Cart from './components/Cart';
 import FloatingEmergencyButton from './components/FloatingEmergencyButton';
+import Donate from './pages/Donate'; // Import the Donate page
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -70,6 +71,7 @@ const App = () => {
             <Route path="/appointment" element={<Appointment />} />
             <Route path="/aboutus" element={<Aboutus />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/donate" element={<Donate />} /> {/* Add the Donate route */}
           </Route>
         </Routes>
 

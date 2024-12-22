@@ -13,7 +13,11 @@ const Home = () => {
         justifyContent: 'center',
         alignItems: 'center',
         color: '#fff',
-        textAlign: 'center'
+        textAlign: 'center',
+        flexDirection: 'column',
+        padding: '0 20px',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Add a dark overlay
+        backgroundBlendMode: 'darken'
       }}>
         <Typography variant="h2" sx={{ fontWeight: 'bold', marginBottom: 2 }}>
           Welcome to EasyMed
@@ -28,13 +32,13 @@ const Home = () => {
 
       {/* Our Services Section */}
       <Container sx={{ marginTop: '50px' }}>
-        <Typography variant="h4" align="center" sx={{ marginBottom: '30px' }}>
+        <Typography variant="h4" align="center" sx={{ marginBottom: '30px', color: '#333' }}>
           Our Services
         </Typography>
         <Grid container spacing={3} justifyContent="center">
           {/* Service Boxes */}
           <Grid item xs={12} sm={6} md={3}>
-            <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: 3 }}>
               <CardMedia
                 component="img"
                 image="/service1.jpg"
@@ -42,14 +46,14 @@ const Home = () => {
                 sx={{ height: 140, width: '100%' }}
               />
               <CardContent>
-                <Typography variant="h6">Consultation</Typography>
-                <Typography variant="body2">Get expert consultations from doctors at your convenience.</Typography>
+                <Typography variant="h6" sx={{ color: '#1976d2' }}>Consultation</Typography>
+                <Typography variant="body2" sx={{ color: '#555' }}>Get expert consultations from doctors at your convenience.</Typography>
               </CardContent>
             </Card>
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: 3 }}>
               <CardMedia
                 component="img"
                 image="/service2.jpg"
@@ -57,14 +61,14 @@ const Home = () => {
                 sx={{ height: 140, width: '100%' }}
               />
               <CardContent>
-                <Typography variant="h6">Medicine Delivery</Typography>
-                <Typography variant="body2">Fast and reliable delivery of your prescribed medicines.</Typography>
+                <Typography variant="h6" sx={{ color: '#1976d2' }}>Medicine Delivery</Typography>
+                <Typography variant="body2" sx={{ color: '#555' }}>Fast and reliable delivery of your prescribed medicines.</Typography>
               </CardContent>
             </Card>
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: 3 }}>
               <CardMedia
                 component="img"
                 image="/service3.jpg"
@@ -72,14 +76,14 @@ const Home = () => {
                 sx={{ height: 140, width: '100%' }}
               />
               <CardContent>
-                <Typography variant="h6">Health Monitoring</Typography>
-                <Typography variant="body2">Monitor your health with our advanced tools and support.</Typography>
+                <Typography variant="h6" sx={{ color: '#1976d2' }}>Health Monitoring</Typography>
+                <Typography variant="body2" sx={{ color: '#555' }}>Monitor your health with our advanced tools and support.</Typography>
               </CardContent>
             </Card>
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: 3 }}>
               <CardMedia
                 component="img"
                 image="/service4.jpg"
@@ -87,8 +91,8 @@ const Home = () => {
                 sx={{ height: 140, width: '100%' }}
               />
               <CardContent>
-                <Typography variant="h6">Emergency Support</Typography>
-                <Typography variant="body2">Get immediate support during emergencies anytime, anywhere.</Typography>
+                <Typography variant="h6" sx={{ color: '#1976d2' }}>Emergency Support</Typography>
+                <Typography variant="body2" sx={{ color: '#555' }}>Get immediate support during emergencies anytime, anywhere.</Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -98,12 +102,12 @@ const Home = () => {
       {/* Medicinal Products Section with Auto-Scroll */}
       <Box sx={{ backgroundColor: '#f4f4f4', padding: '50px 0' }}>
         <Container>
-          <Typography variant="h4" align="center" sx={{ marginBottom: '30px' }}>
+          <Typography variant="h4" align="center" sx={{ marginBottom: '30px', color: '#333' }}>
             Our Medicinal Products
           </Typography>
           <Box sx={{ overflowX: 'auto', display: 'flex', gap: 2 }}>
             {/* Sample Product Cards */}
-            <Card sx={{ minWidth: 250, maxWidth: 250 }}>
+            <Card sx={{ minWidth: 250, maxWidth: 250, boxShadow: 3 }}>
               <CardMedia
                 component="img"
                 image="/product1.jpg"
@@ -111,12 +115,12 @@ const Home = () => {
                 sx={{ height: 140 }}
               />
               <CardContent>
-                <Typography variant="h6">Pain Reliever</Typography>
-                <Typography variant="body2">$25.99</Typography>
+                <Typography variant="h6" sx={{ color: '#1976d2' }}>Pain Reliever</Typography>
+                <Typography variant="body2" sx={{ color: '#555' }}>$25.99</Typography>
               </CardContent>
             </Card>
 
-            <Card sx={{ minWidth: 250, maxWidth: 250 }}>
+            <Card sx={{ minWidth: 250, maxWidth: 250, boxShadow: 3 }}>
               <CardMedia
                 component="img"
                 image="/product2.jpg"
@@ -124,12 +128,12 @@ const Home = () => {
                 sx={{ height: 140 }}
               />
               <CardContent>
-                <Typography variant="h6">Cough Syrup</Typography>
-                <Typography variant="body2">$15.99</Typography>
+                <Typography variant="h6" sx={{ color: '#1976d2' }}>Cough Syrup</Typography>
+                <Typography variant="body2" sx={{ color: '#555' }}>$15.99</Typography>
               </CardContent>
             </Card>
 
-            <Card sx={{ minWidth: 250, maxWidth: 250 }}>
+            <Card sx={{ minWidth: 250, maxWidth: 250, boxShadow: 3 }}>
               <CardMedia
                 component="img"
                 image="/product3.jpg"
@@ -137,12 +141,12 @@ const Home = () => {
                 sx={{ height: 140 }}
               />
               <CardContent>
-                <Typography variant="h6">Antibiotics</Typography>
-                <Typography variant="body2">$30.99</Typography>
+                <Typography variant="h6" sx={{ color: '#1976d2' }}>Antibiotics</Typography>
+                <Typography variant="body2" sx={{ color: '#555' }}>$30.99</Typography>
               </CardContent>
             </Card>
 
-            <Card sx={{ minWidth: 250, maxWidth: 250 }}>
+            <Card sx={{ minWidth: 250, maxWidth: 250, boxShadow: 3 }}>
               <CardMedia
                 component="img"
                 image="/product4.jpg"
@@ -150,8 +154,8 @@ const Home = () => {
                 sx={{ height: 140 }}
               />
               <CardContent>
-                <Typography variant="h6">Vitamins</Typography>
-                <Typography variant="body2">$10.99</Typography>
+                <Typography variant="h6" sx={{ color: '#1976d2' }}>Vitamins</Typography>
+                <Typography variant="body2" sx={{ color: '#555' }}>$10.99</Typography>
               </CardContent>
             </Card>
           </Box>
@@ -168,7 +172,11 @@ const Home = () => {
         alignItems: 'center',
         color: '#fff',
         textAlign: 'center',
-        marginTop: '50px'
+        marginTop: '50px',
+        flexDirection: 'column',
+        padding: '0 20px',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Add a dark overlay
+        backgroundBlendMode: 'darken'
       }}>
         <Typography variant="h4" sx={{ fontWeight: 'bold', marginBottom: 2 }}>
           Book Your Appointment Now

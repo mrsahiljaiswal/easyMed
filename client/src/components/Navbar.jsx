@@ -80,8 +80,9 @@ const Navbar = () => {
     <div>
       <Button component={Link} to="/home" color="inherit">Home</Button>
       <Button component={Link} to="/KYS" color="inherit">KYS</Button>
-      <Button component={Link} to="/MedicineDelivery" color="inherit">Medicine Delivery</Button>
+      <Button component={Link} to="/MedicineDelivery" color="inherit">Medicine</Button>
       <Button component={Link} to="/Appointment" color="inherit">Appointment</Button>
+      <Button component={Link} to="/Donate" color="inherit">Donate</Button>
       <Button component={Link} to="/Aboutus" color="inherit">About Us</Button>
     </div>
   );
@@ -121,6 +122,9 @@ const Navbar = () => {
       </ListItem>
       <ListItem button component={Link} to="/Aboutus">
         <ListItemText primary="About Us" />
+      </ListItem>
+      <ListItem button component={Link} to="/Donate">
+        <ListItemText primary="Donate" />
       </ListItem>
 
       {/* Logout Button in Sidebar */}

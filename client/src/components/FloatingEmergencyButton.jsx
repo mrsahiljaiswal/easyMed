@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Fab } from '@mui/material';
-import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import EmergencyIcon from '@mui/icons-material/Warning'; // Use a warning icon for emergency
 
 const FloatingEmergencyButton = () => {
   const [emergencyNumber, setEmergencyNumber] = useState('911'); // Default to 911
@@ -46,7 +46,7 @@ const FloatingEmergencyButton = () => {
 
   return (
     <Fab
-      color="secondary"
+      color="error"
       aria-label="emergency"
       onClick={handleEmergencyCall}
       style={{
@@ -56,7 +56,7 @@ const FloatingEmergencyButton = () => {
         zIndex: 1000,
       }}
     >
-      <LocalHospitalIcon />
+      <EmergencyIcon />
     </Fab>
   );
 };

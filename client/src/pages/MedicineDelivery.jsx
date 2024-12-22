@@ -96,9 +96,9 @@ const MedicineDelivery = ({ setCartCount }) => {
               <Typography variant="h5" gutterBottom>
                 {category.category}
               </Typography>
-              <Grid container spacing={3}>
+              <div className={classes.scrollContainer}>
                 {category.items.map((product) => (
-                  <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
+                  <div className={classes.scrollItem} key={product.id}>
                     <Card className={classes.card}>
                       <CardMedia
                         className={classes.media}
@@ -125,9 +125,9 @@ const MedicineDelivery = ({ setCartCount }) => {
                         </Button>
                       </CardActions>
                     </Card>
-                  </Grid>
+                  </div>
                 ))}
-              </Grid>
+              </div>
             </div>
           );
         })}
