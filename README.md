@@ -33,19 +33,21 @@ EasyMed is a full-stack web application that provides health-related services, i
 ## **Screenshots**
 
 ### **Homepage**
-![Homepage](public/images/homepage.png)
+![Homepage](/client/public/images/homepage.png)
+
+![Homepage](/client/public/images/homepage2.png)
 
 ### **Know Your Health**
-![Know Your Health](public/images/know-your-health.png)
+![Know Your Health](/client/public/images/know-your-health.png)
 
 ### **Appointment Booking**
-![Appointment](public/images/appointment.png)
+![Appointment](/client/public/images/appointment.png)
 
 ### **Donation Page**
-![Donate](public/images/donate.png)
+![Donate](/client/public/images/donate.png)
 
 ### **Medicine Delivery**
-![Medicine Delivery](public/images/medicine-delivery.png)
+![Medicine Delivery](/client/public/images/medicine-delivery.png)
 
 ---
 
